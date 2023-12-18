@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add user</title>
+    <link href="/css/stylesheet.css" type="text/css" rel="stylesheet">
+
+</head>
+<body>
+<form th:method="POST" th:action="@{/add}" th:object="${user}">
+    <label for="firstname">Name: </label>
+    <input type="text" th:field="*{firstName}" id="firstname">
+    <label for="lastName">Last name: </label>
+    <input type="text" th:field="*{lastName}" id="lastName">
+    <label for="age">Age: </label>
+    <input type="number" th:field="*{age}" id="age" max="100">
+    <label for="username">Username: </label>
+    <input type="text" th:field="*{username}" id="username">
+    <label for="password">Password: </label>
+    <input type="password" th:field="*{password}" minlength="1" required id="password">
+    <p>
+        <label>Roles:
+            <input type="checkbox" name="roles" id="roles"
+                   th:each="role : ${roles}"
+                   th:text="${role.name}"
+                   th:value="${role.id}"
+                   th:field="*{roles}"
+            />
+        </label>
+    </p>
+    <br/>
+    <input type="submit" value="Сохранить"/>
+</form>
+</body>
+</html>
