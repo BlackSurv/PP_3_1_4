@@ -34,28 +34,12 @@ public class AdminController {
         PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
         model.addAttribute("loginUser", personDetails.getUser());
         model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("userNew", new User());
+
         return "users";
     }
 
-    @GetMapping(value = "/admin/add")
-    public String newUser(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("roles", roleService.getAllRoles());
-        return "add";
-    }
-
-    @GetMapping(value = "/admin/edit")
-    public String editUser(@RequestParam("userId") Long userId, Model model) {
-        model.addAttribute("user", userService.getUserById(userId));
-        model.addAttribute("roles", roleService.getAllRoles());
-        return "update";
-    }
-
-    @PostMapping(value = "/delete")
-    public String delete(@RequestParam("userId") Long userId) {
-        userService.deleteById(userId);
-        return "redirect:/admin";
-    }
 
     @PostMapping(value = "/add")
     public String create(@ModelAttribute("user") User user, @RequestParam(name = "roles", required = false) List<Long> roleId) {
@@ -71,7 +55,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/update")
-    public String update(@ModelAttribute("user") User user, @RequestParam(name = "roles", required = false) List<Long> roleId) {
+    public String update(@ModelAttribute("userEdited") User user, @RequestParam(name = "roles", required = false) List<Long> roleId) {
         Set<Role> roleSet = new HashSet<>();
         if (roleId != null) {
             for (Long role : roleId) {
@@ -80,6 +64,12 @@ public class AdminController {
             user.setRoles(roleSet);
         }
         userService.update(user);
+        return "redirect:/admin";
+    }
+
+    @PostMapping(value = "/delete")
+    public String delete(@RequestParam("userId") Long userId) {
+        userService.deleteById(userId);
         return "redirect:/admin";
     }
 }
