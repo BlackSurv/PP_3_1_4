@@ -1,9 +1,9 @@
 ## Практическая задача 3.1.4 Java pre-project. Задача 3.2. Работа с Bootstrap.
 ### Данные для входа на страницы
-Логин - admin  
+Логин -  admin@mail.com    
 Пароль - admin
 
-Логин - user  
+Логин - user@mail.com   
 Пароль - user
 
 ### Задание:
